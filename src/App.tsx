@@ -1,32 +1,60 @@
+// src/App.tsx
+import { useState, useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AuthForm from "@/components/AuthForm";
 
-import Dashboard from "./components/Dashboard";
+import LoginRegister from "@/components/LoginRegister";
+import Dashboard from "@/components/Dashboard";
+import NotFound from "@/pages/NotFound";
 import { Language, BankAccount } from "@/types/banking";
 
 const queryClient = new QueryClient();
 
-const App = () => {
-  const token = localStorage.getItem("token");
+interface User {
+  token: string;
+  name: string;
+  account: BankAccount;
+}
 
-  // Example BankAccount for dashboard
-  const exampleAccount: BankAccount = {
-    accountNumber: "1234567890",
-    accountName: "John Doe",
-    balance: 1000,
+const App = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [language, setLanguage] = useState<Language>("en");
+
+  // Load user from localStorage on app start
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  // Handle login
+  const handleLogin = (name: string) => {
+    const token = "mock-token"; // You can replace with real auth
+    const account: BankAccount = {
+      accountName: name,
+      accountNumber: "1234567890",
+      balance: 1000,
+    };
+
+    const newUser = { token, name, account };
+    localStorage.setItem("user", JSON.stringify(newUser));
+    setUser(newUser);
   };
 
-  // Dashboard props
-  const dashboardProps = {
-    language: "zu" as Language, // Zulu
-    account: exampleAccount,
-    onAction: (action: string) => console.log("Dashboard action:", action),
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
+  // Handle dashboard actions
+  const handleAction = (action: string) => {
+    console.log("Dashboard action:", action);
+    // Here you can open modals, navigate, or trigger voice actions
   };
 
   return (
@@ -36,22 +64,34 @@ const App = () => {
         <Sonner />
         <Router>
           <Routes>
-            {/* Root route: login/register if not authenticated */}
             <Route
               path="/"
-              element={!token ? <AuthForm /> : <Navigate to="/dashboard" />}
+              element={
+                !user ? (
+                  <LoginRegister onLogin={handleLogin} />
+                ) : (
+                  <Navigate to="/dashboard" />
+                )
+              }
             />
 
-            {/* Dashboard route */}
             <Route
               path="/dashboard"
-              element={token ? <Dashboard {...dashboardProps} /> : <Navigate to="/" />}
+              element={
+                user ? (
+                  <Dashboard
+                    language={language}
+                    account={user.account}
+                    onAction={handleAction}
+                    onLanguageChange={setLanguage}
+                    onLogout={handleLogout}
+                  />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
 
-            {/* Optional Index page */}
-            <Route path="/index" element={<Index />} />
-
-            {/* Catch-all 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

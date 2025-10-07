@@ -1,88 +1,104 @@
+// src/components/LoginRegister.tsx
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-type User = {
-  username: string;
-  password: string;
-};
+interface LoginRegisterProps {
+  onLogin: (name: string) => void;
+}
 
-const LoginRegister = () => {
-  const [isRegister, setIsRegister] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginRegister = ({ onLogin }: LoginRegisterProps) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mode, setMode] = useState<"login" | "register" | "forgot">("login");
 
-  // Simple in-memory storage for demo purposes
-  const [users, setUsers] = useState<User[]>([]);
-
-  const handleRegister = () => {
-    if (!username || !password) {
+  const handleSubmit = () => {
+    if (!name || (mode === "register" && !email)) {
       toast.error("Please fill all fields");
       return;
     }
-
-    // Check if username already exists
-    if (users.some((u) => u.username === username)) {
-      toast.error("Username already exists");
-      return;
-    }
-
-    setUsers([...users, { username, password }]);
-    toast.success("Registered successfully! Please login.");
-    setUsername("");
-    setPassword("");
-    setIsRegister(false);
-  };
-
-  const handleLogin = () => {
-    if (!username || !password) {
-      toast.error("Please fill all fields");
-      return;
-    }
-
-    const user = users.find((u) => u.username === username && u.password === password);
-    if (user) {
-      localStorage.setItem("token", "dummy-token");
-      toast.success(`Welcome, ${username}!`);
-      window.location.href = "/dashboard"; // redirect to dashboard
-    } else {
-      toast.error("Invalid credentials");
-    }
+    onLogin(name);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white gap-6 px-4">
-      <h1 className="text-3xl font-bold">{isRegister ? "Register" : "Login"}</h1>
+    <div className="max-w-md mx-auto mt-24 p-6 bg-muted rounded-lg space-y-4 shadow-lg">
+      <h2 className="text-2xl font-bold text-center">
+        {mode === "login"
+          ? "Login"
+          : mode === "register"
+          ? "Register"
+          : "Forgot Password"}
+      </h2>
 
-      <Input
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <Input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      {(mode === "login" || mode === "register") && (
+        <>
+          <div className="space-y-2">
+            <Label>Name</Label>
+            <Input
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </>
+      )}
 
-      <Button
-        className="w-32"
-        onClick={isRegister ? handleRegister : handleLogin}
-      >
-        {isRegister ? "Register" : "Login"}
+      {mode === "register" && (
+        <div className="space-y-2">
+          <Label>Email</Label>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+      )}
+
+      {mode === "forgot" && (
+        <div className="space-y-2">
+          <Label>Email</Label>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+      )}
+
+      <Button className="w-full" onClick={handleSubmit}>
+        {mode === "login" ? "Login" : mode === "register" ? "Register" : "Send Reset Link"}
       </Button>
 
-      <p className="text-sm text-gray-400">
-        {isRegister ? "Already have an account?" : "Don't have an account?"}{" "}
-        <button
-          className="text-yellow-400 font-semibold underline"
-          onClick={() => setIsRegister(!isRegister)}
-        >
-          {isRegister ? "Login" : "Register"}
-        </button>
-      </p>
+      <div className="flex justify-between text-sm mt-2">
+        {mode !== "login" && (
+          <button
+            className="underline text-primary"
+            onClick={() => setMode("login")}
+          >
+            Back to Login
+          </button>
+        )}
+        {mode === "login" && (
+          <>
+            <button
+              className="underline text-primary"
+              onClick={() => setMode("register")}
+            >
+              Register
+            </button>
+            <button
+              className="underline text-primary"
+              onClick={() => setMode("forgot")}
+            >
+              Forgot Password
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };
