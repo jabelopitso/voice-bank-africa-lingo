@@ -4,6 +4,8 @@ import { TRANSLATIONS } from '@/utils/voiceCommands';
 import VoiceInterface from '@/components/VoiceInterface';
 import Dashboard from '@/components/Dashboard';
 import TransactionList from '@/components/TransactionList';
+import SendMoneyDialog from '@/components/SendMoneyDialog';
+import PayBillsDialog from '@/components/PayBillsDialog';
 import LanguageSelector from '@/components/LanguageSelector';
 import { toast } from 'sonner';
 import heroBg from '@/assets/hero-bg.jpg';
@@ -54,6 +56,8 @@ const MOCK_TRANSACTIONS: Transaction[] = [
 const Index = () => {
   const [language, setLanguage] = useState<Language>('en');
   const [showTransactions, setShowTransactions] = useState(false);
+  const [showSendMoney, setShowSendMoney] = useState(false);
+  const [showPayBills, setShowPayBills] = useState(false);
   const t = TRANSLATIONS[language];
 
   const handleCommand = (command: string) => {
@@ -63,11 +67,11 @@ const Index = () => {
         setShowTransactions(false);
         break;
       case 'sendMoney':
-        toast.info('Send money feature - Demo only');
+        setShowSendMoney(true);
         setShowTransactions(false);
         break;
       case 'payBills':
-        toast.info('Pay bills feature - Demo only');
+        setShowPayBills(true);
         setShowTransactions(false);
         break;
       case 'showTransactions':
@@ -112,6 +116,18 @@ const Index = () => {
           <TransactionList language={language} transactions={MOCK_TRANSACTIONS} />
         )}
       </div>
+
+      {/* Dialogs */}
+      <SendMoneyDialog 
+        language={language} 
+        open={showSendMoney} 
+        onOpenChange={setShowSendMoney} 
+      />
+      <PayBillsDialog 
+        language={language} 
+        open={showPayBills} 
+        onOpenChange={setShowPayBills} 
+      />
 
       {/* Footer */}
       <footer className="bg-card border-t border-border py-6 mt-12">
