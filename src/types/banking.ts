@@ -14,7 +14,7 @@ export interface BankAccount {
   accountName: string;
 }
 
-export type Language = 'en' | 'sw' | 'ha';
+export type Language = 'en' | 'zu' | 'st';
 
 export interface LanguageConfig {
   code: Language;

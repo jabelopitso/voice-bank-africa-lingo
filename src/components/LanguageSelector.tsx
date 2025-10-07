@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 
 const LANGUAGES: LanguageConfig[] = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
-  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' },
+  { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
 ];
 
 interface LanguageSelectorProps {

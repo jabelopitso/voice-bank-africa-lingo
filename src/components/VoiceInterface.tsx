@@ -27,7 +27,7 @@ const VoiceInterface = ({ language, onCommand }: VoiceInterfaceProps) => {
     
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = language === 'en' ? 'en-US' : language === 'sw' ? 'sw-KE' : 'ha-NG';
+    recognition.lang = language === 'en' ? 'en-US' : language === 'zu' ? 'zu-ZA' : 'st-ZA';
 
     recognition.onresult = (event: any) => {
       const current = event.resultIndex;
