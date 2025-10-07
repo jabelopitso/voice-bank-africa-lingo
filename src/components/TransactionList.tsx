@@ -57,7 +57,8 @@ const TransactionList = ({ language, transactions }: TransactionListProps) => {
                     transaction.type === 'receive' ? 'text-primary' : 'text-foreground'
                   }`}
                 >
-                  {transaction.type === 'receive' ? '+' : '-'} {t.currency} {transaction.amount.toLocaleString()}
+                  {transaction.type === 'receive' ? '+' : '-'} {t.currency}{' '}
+                  {transaction.amount.toLocaleString()}
                 </p>
                 <Badge variant={transaction.status === 'completed' ? 'default' : 'secondary'}>
                   {transaction.status === 'completed' ? t.completed : t.pending}

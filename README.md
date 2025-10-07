@@ -1,73 +1,86 @@
-# Welcome to your Lovable project
+VoiceBank Africa
+Project Overview
 
-## Project info
+VoiceBank Africa is a revolutionary voice-activated banking web application designed for African users. It allows users to perform banking actions such as checking balances, sending money, and paying bills using their voice. The app currently supports multiple African languages, including Zulu and Sotho, providing an inclusive, multilingual experience.
 
-**URL**: https://lovable.dev/projects/60df0d30-945b-4852-9a3b-6e0e1058aedf
+The project leverages modern web technologies like React, TypeScript, Tailwind CSS, and shadcn-ui components to deliver a responsive, interactive, and user-friendly interface.
 
-## How can I edit this code?
+Features
 
-There are several ways of editing your application.
+Voice-activated banking: Users can send money, pay bills, and check balances using natural voice commands.
 
-**Use Lovable**
+Multilingual support: Supports African languages like Zulu (zu) and Sotho (st).
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/60df0d30-945b-4852-9a3b-6e0e1058aedf) and start prompting.
+Real-time feedback: Displays transcripts of recognized speech and gives visual/audio feedback.
 
-Changes made via Lovable will be committed automatically to this repo.
+Responsive design: Works on mobile and desktop with a modern UI built using Tailwind CSS and shadcn-ui.
 
-**Use your preferred IDE**
+Loading & feedback indicators: Shows spinners and voice feedback while performing actions.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Technologies Used
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Frontend Framework: React
 
-Follow these steps:
+Language: TypeScript
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+Styling: Tailwind CSS
+
+UI Components: shadcn-ui
+
+Build Tool: Vite
+
+Voice Recognition: Web Speech API (Chrome/Edge support)
+
+Getting Started
+
+Follow these steps to set up and run the project locally:
+
+1.Clone the repository:
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+2.Navigate to the project folder:
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+3.Install dependencies:
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4.Start the development server:
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+How VoiceBank Africa Works
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Voice Commands: Users can click a button to start listening and speak commands like:
 
-**Use GitHub Codespaces**
+"Send 100 to John"
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+"Check my balance"
 
-## What technologies are used for this project?
+"Pay electricity bill"
 
-This project is built with:
+Speech Recognition: The app uses the Web Speech API to recognize voice input in supported languages.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Real-time Feedback:
 
-## How can I deploy this project?
+Displays the spoken text in a transcript box.
 
-Simply open [Lovable](https://lovable.dev/projects/60df0d30-945b-4852-9a3b-6e0e1058aedf) and click on Share -> Publish.
+Provides visual indicators (e.g., spinners) while processing commands.
 
-## Can I connect a custom domain to my Lovable project?
+Uses speech synthesis to give audio feedback confirming actions.
 
-Yes, you can!
+Multilingual Support: The app automatically adapts voice recognition and text feedback based on the selected language (Zulu or Sotho).
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Contributing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Fork the repository and clone it locally.
+
+Create a new branch for your changes.
+
+Make your improvements and test them.
+
+Commit and push your branch.
+
+Open a pull request for review.
+
+License
+
+Specify your license here (e.g., MIT License) if applicable.
